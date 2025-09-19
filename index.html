@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chinni's Portfolio</title>
+        <meta name="author" content="Chinni krishna">
+        <meta name="description" content="Trying to Upskill Myself">
+        <style>
+            :root {
+                --primary-theme : rgb(127, 159, 191);
+                --secondary-theme : rgb(175, 199, 223);
+                --bg-theme : rgb(223, 239, 255);
+                font-family: sans-serif;
+            }
+
+            @keyframes sliding {
+                from {
+                    transform : translateX(0);
+                }
+                to {
+                    transform : translateX(calc(min(270px, calc(25vw + 20px)) * -7));
+                }
+            }
+
+            @property --gradient-stop {
+                syntax: '<percentage>';
+                inherits: false;
+                initial-value: 0%;
+            }
+
+            body {
+                margin : 0;
+                background-color: var(--bg-theme);
+            }
+
+            #main {
+                width: min(100vw, 1600px);
+                position: fixed;
+                left : 50vw;
+                transform: translateX(-50%);
+                overflow-y: scroll;
+                height : 100vh;
+            }
+
+            #education {
+                margin : 20px;
+                padding : 20px;
+                border-radius : 20px;
+                background-color: var(--secondary-theme);
+            }
+            #education > div {
+                display: flex;
+                justify-content: space-evenly;
+                flex-wrap: wrap;
+                gap : 10px;
+                min-height: 250px;
+            }
+            #education > div > div {
+                flex-grow: 1;
+                background-color: var(--bg-theme);
+                padding : 10px;
+                border-radius: 10px;
+                display : flex;
+                justify-content: center;
+            }
+            #education > div > div:nth-child(odd) {
+                align-self: flex-start;
+            }
+            #education > div > div:nth-child(even) {
+                align-self: flex-end;
+            }
+
+            #certificates {
+                display: flex;
+                flex-wrap: wrap;
+                background-color: var(--secondary-theme);
+                margin: 100px 20px;
+                padding: 30px;
+                border-radius: 30px;
+                gap : 20px;
+            }
+            #certificates > div {
+                background-color: var(--bg-theme);
+                padding: 20px;
+                border-radius: 15px;
+                flex : max(300px, calc(50% - 50px)) 1 0;
+            }
+            #certificates h3 {
+                margin : 0;
+                text-align: center;
+            }
+            #certificates > div > div {
+                display: flex;
+                flex-direction: column;
+                margin-top : 10px;
+                overflow-y: scroll;
+                max-height : 500px;
+                gap : 10px;
+            }
+            #certificates > div > div > div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-image: linear-gradient(to right, var(--secondary-theme), var(--bg-theme));
+                padding : 10px;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+            #certificates h4, #certificates p {
+                margin : 0;
+            }
+            .duration, .issuance {
+                font-size: 0.8em;
+                color : gray;
+            }
+
+            #publications {
+                margin : 100px 20px;
+                padding : 20px;
+                background-image: linear-gradient(to right bottom, var(--secondary-theme), var(--bg-theme) var(--gradient-stop), var(--secondary-theme));
+                border-radius: 20px;
+                transition : --gradient-stop 1s ease-in-out;
+            }
+            #publications:hover {
+                --gradient-stop : 100%;
+                cursor: pointer;
+            }
+            #publications > div {
+                max-height : 600px;
+                overflow-y: scroll;
+                display : flex;
+                flex-wrap : wrap;
+                gap : 20px;
+            }
+            #publications > div > div {
+                background-image: linear-gradient(to right top, var(--primary-theme), var(--secondary-theme), var(--primary-theme));
+                padding : 10px;
+                border-radius: 10px;
+                flex-grow : 1;
+            }
+
+            #projects {
+                margin : 100px 20px;
+                padding : 20px;
+                background-color: var(--secondary-theme);
+                border-radius: 20px;
+                cursor: pointer;
+            }
+            #projects > div:first-of-type {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            #projects h2 {
+                margin : 0;
+            }
+            #projects span {
+                font-size: 2em;
+            }
+            #projects > div:last-of-type {
+                overflow-x: hidden;
+                mask-image: linear-gradient(to right, rgba(0,0,0,0) 5%, rgb(0,0,0) 20%, rgb(0,0,0) 80%, rgba(0,0,0,0) 95%);
+            }
+            #projects > div:last-of-type > div {
+                display: flex;
+                gap : 20px;
+                animation-name : sliding;
+                animation-duration: 21s;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+            }
+            #projects img {
+                width : min(25vw, 250px);
+                border-radius: 10px;
+            }
+
+            #skills {
+                margin : 100px 20px;
+            }
+            #skills input {
+                display: none;
+            }
+            #skills input:checked + div {
+                display: flex;
+            }
+            #skills label {
+                padding : 10px;
+                border-radius: 10px 10px 0 0;
+                background-color: var(--secondary-theme);
+                cursor: pointer;
+            }
+            #skills > div:first-of-type {
+                display: flex;
+                justify-content: center;
+                gap : 10px;
+            }
+            #skills > div:last-of-type {
+                background-color: var(--secondary-theme);
+                padding : 20px;
+                border-radius: 20px;
+            }
+            #general, #tech-tool {
+                display : flex;
+                flex-wrap : wrap;
+                gap : 15px;
+                display: none;
+            }
+            #general > div, #tech-tool > div {
+                padding : 5px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            #general > div:nth-child(odd), #tech-tool > div:nth-child(odd) {
+                background-image: linear-gradient(to right bottom, rgb(0, 127, 255), rgb(127, 191, 255), rgb(0, 127, 255));
+            }
+            #general > div:nth-child(2n), #tech-tool > div:nth-child(even) {
+                background-image: linear-gradient(to right bottom, rgb(0, 191, 127), rgb(127, 255, 191), rgb(0, 191, 127));
+            }
+            #general > div:nth-child(3n), #tech-tool > div:nth-child(3n) {
+                background-image: linear-gradient(to right bottom, rgb(191, 191, 191), rgb(255, 255, 255), rgb(191, 191, 191));
+            }
+            #general > div:nth-child(5n), #tech-tool > div:nth-child(5n) {
+                background-image: linear-gradient(to right bottom, rgb(255, 64, 64), rgb(255, 159, 159), rgb(255, 64, 64));
+            }
+
+            #contact {
+                display: flex;
+                justify-content: space-evenly;
+                margin: 25px;
+            }
+            #contact > div {
+                background-color: white;
+                width: 100px;
+                height : 100px;
+                display : flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;
+                border-radius: 10px;
+                cursor: pointer;
+                box-shadow: 5px 5px 2px var(--secondary-theme);
+            }
+
+            #display {
+                position : fixed;
+                top : 0;
+                left : 0;
+                right : 0;
+                bottom : 0;
+                transform : translateX(100%);
+                transition: transform 1s ease-in-out;
+                background-color: var(--bg-theme);
+                overflow-y : scroll;
+            }
+
+            #profile {
+                background-color: white;
+                margin : 20px;
+                padding : 20px;
+                border-radius: 20px;
+            }
+            #profile img {
+                width : 250px;
+                border-radius: 50%;
+                box-shadow: 2px 2px 5px 5px var(--secondary-theme);
+            }
+            #profile > div:first-of-type {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                gap : 25px;
+            }
+            #profile h1 {
+                font-size: min(75px, 4.5vw);
+                margin : 0;
+                color : var(--primary-theme);
+            }
+            #profile > div:last-of-type {
+                margin : 50px;
+                height : 500px;
+                padding : 10px;
+                border-radius: 10px;
+                background-color: var(--bg-theme);
+                position: relative;
+                overflow: hidden;
+            }
+            #profile > div:last-of-type > div {
+                position: absolute;
+            }
+            @media screen and (max-width : 640px) {
+                #profile h1 {
+                    font-size : revert;
+                }
+                #profile > div:first-of-type {
+                    flex-direction: column;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <div id="profile">
+                <div>
+                    <div style="position: relative;">
+                        <p style="position: absolute; top : -35px; font-weight:bold;">Chinni Krishna</p>
+                        <h1>Software</h1>
+                    </div>
+                    <img src="img/profile.heic">
+                    <h1>Developer & Analyst</h1>
+                </div>
+                <div>
+                    <div>Music</div>
+                    <div>Traveling</div>
+                    <div>Photography</div>
+                    <div>Gaming</div>
+                    <div>Fitness</div>
+                    <div>Cooking</div>
+                    <div>Anime</div>
+                    <div>Friends</div>
+                    <div>Passionate</div>
+                    <div>Disciplined</div>
+                    <div>Digital Life</div>
+                    <div>Independent</div>
+                </div>
+            </div>
+            <div id="education">
+                <h2>Education</h2>
+                <div>
+                    <div>
+                        <div>
+                            <h3>San Jose State University</h3>
+                            <p>Masters in Computer Science</p>
+                            <span>August 2025 - May 2027</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>VIT-AP University</h3>
+                            <p>BTech in CSE with AI & ML</p>
+                            <span>August 2021 - April 2025</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Sri Chaitanya Jr College</h3>
+                            <p>Intermediate - MPC</p>
+                            <span>June 2019 - March 2021</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Sri Chaitanya e-techno School</h3>
+                            <p>10th State Board</p>
+                            <span>June 2018 - April 2019</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="certificates">
+                <div>
+                    <h3>Experience</h3>
+                    <div>
+                        <div onclick="document.querySelector('#display > img').src='img/e1.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Systems Intern</h4>
+                                <p>MMRFIC Technology Private Limited</p>
+                                <span class="duration">Jan 2025 - May 2025</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/e2.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Artificial Intelligence Intern</h4>
+                                <p>Corizo</p>
+                                <span class="duration">Jan 2025 - May 2025</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/e3.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Intern in Cyber Security</h4>
+                                <p>Cranes Varsity Pvt. Ltd.</p>
+                                <span class="duration">Jan 2025 - May 2025</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Licenses & Certificates</h3>
+                    <div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc22.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>An Attendance Monitoring System, And Method Thereof</h4>
+                                <p>Intellectual Property of India</p>
+                                <span class="issuance">Patented Mar 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc1.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>AWS Certified Cloud Practitioner</h4>
+                                <p>Amazon Web Services (AWS)</p>
+                                <span class="issuance">Issued Jul 2025</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc2.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Conference Paper titled Gesture and Voice-Controlled Virtual Mouse: An AI- Based Approach to Hands-Free Navigation_ Publication and Presentation</h4>
+                                <p>IEEE</p>
+                                <span class="issuance">Issued Apr 2025</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc3.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Agile Project Management</h4>
+                                <p>Google</p>
+                                <span class="issuance">Issued Nov 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc4.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Capstone: Applying Project Management in the Real World</h4>
+                                <p>Google</p>
+                                <span class="issuance">Issued Nov 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc5.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Conference Paper titled Realtime Object Detection using YoloV9c and Flask Web Application _ Publication and Presentation</h4>
+                                <p>IEEE</p>
+                                <span class="issuance">Issued Nov 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc6.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Foundations of Project Management</h4>
+                                <p>Google</p>
+                                <span class="issuance">Issued Nov 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc7.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Google Project Management: Specialization</h4>
+                                <p>Google</p>
+                                <span class="issuance">Issued Nov 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc8.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Project Execution: Running the Project</h4>
+                                <p>Google</p>
+                                <span class="issuance">Issued Nov 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc9.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Project Initiation: Starting a Successful Project</h4>
+                                <p>Google</p>
+                                <span class="issuance">Issued Nov 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc10.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Project Planning: Putting It All Together</h4>
+                                <p>Google</p>
+                                <span class="issuance">Issued Nov 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc11.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Business Analytics Capstone</h4>
+                                <p>University of Pennsylvania</p>
+                                <span class="issuance">Issued Oct 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc12.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Business Analytics Specialization</h4>
+                                <p>University of Pennsylvania</p>
+                                <span class="issuance">Issued Oct 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc13.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Accounting Analytics</h4>
+                                <p>University of Pennsylvania</p>
+                                <span class="issuance">Issued Sep 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc14.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Customer Analytics</h4>
+                                <p>University of Pennsylvania</p>
+                                <span class="issuance">Issued Sep 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc15.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Operations Analytics</h4>
+                                <p>University of Pennsylvania</p>
+                                <span class="issuance">Issued Sep 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc16.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>People Analytics</h4>
+                                <p>University of Pennsylvania</p>
+                                <span class="issuance">Issued Sep 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc17.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Unstop certified AWS</h4>
+                                <p>Unstop</p>
+                                <span class="issuance">Issued Sep 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc18.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Unstop certified Data Analytics</h4>
+                                <p>Unstop</p>
+                                <span class="issuance">Issued Sep 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc19.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Unstop certified Full Stack Web Developer</h4>
+                                <p>Unstop</p>
+                                <span class="issuance">Issued Sep 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc20.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Unstop certified Natural Language Processing and Deep Learning Course Completion</h4>
+                                <p>Unstop</p>
+                                <span class="issuance">Issued Sep 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                        <div onclick="document.querySelector('#display > img').src='img/lc21.jpg'; document.getElementById('display').style.transform='translateX(0)';">
+                            <div>
+                                <h4>Unstop certified Power Bi and Business Intelligence course completion</h4>
+                                <p>Unstop</p>
+                                <span class="issuance">Issued Sep 2024</span>
+                            </div>
+                            <span>></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="publications" onclick="window.open('https://ieeexplore.ieee.org/author/263762173323849')">
+                <h2>Publications</h2>
+                <div>
+                    <div>
+                        <h4>Real-Time Object Detection Using YoloV9C and Flask Web Application </h4>
+                        <p>Published in IEEE on Feb 2025</p>
+                    </div>
+                    <div>
+                        <h4>Gesture and Voice Controlled Virtual Mouse: An AI Based Approach For Hands Free Navigation</h4>
+                        <p>Published in IEEE on Feb 2025</p>
+                    </div>
+                    <div>
+                        <h4>Object Detection In An Image Using Synthetic Data and Generative AI </h4>
+                        <p>Published in IEEE on Aug 2025</p>
+                    </div>
+                    <div>
+                        <h4>VEFNet: A Hybrid Transfer Learning Model For Retinal Disease Diagnosis </h4>
+                        <p>Journals Published on Jul 2025</p>
+                    </div>
+                    <div>
+                        <h4>VETE: A Hybrid Model For Detection of Autism Spectrum Disorder </h4>
+                        <p>Journals Published on Apr 2025</p>
+                    </div>
+                </div>
+            </div>
+            <div id="projects" onclick="window.open('https://github.com/chinnikrishna854')">
+                <div><h2>My Projects</h2><span>&rarr;</span></div>
+                <div>
+                    <div>
+                        <img src="img/p1.png">
+                        <img src="img/p2.png">
+                        <img src="img/p3.png">
+                        <img src="img/p4.png">
+                        <img src="img/p5.png">
+                        <img src="img/p6.png">
+                        <img src="img/p7.png">
+                        <img src="img/p1.png">
+                        <img src="img/p2.png">
+                        <img src="img/p3.png">
+                        <img src="img/p4.png">
+                        <img src="img/p5.png">
+                        <img src="img/p6.png">
+                        <img src="img/p7.png">
+                    </div>
+                </div>
+            </div>
+            <div id="skills">
+                <div>
+                    <label for="a">General</label>
+                    <label for="b">Tech & Tool</label>
+                </div>
+                <div>
+                    <input type="radio" name="skills" id="a" checked>
+                    <div id="general">
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Cloud Services</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Graphic Design</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Graphical User Interface</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Agile Project Management</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Coaching</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Scrum</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Social Influence</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Human Influence</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Social Collaboration</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Statistics</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Statistical Data Analysis</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Pivot Tables</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Visualization</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Data Analytics</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Natural Language Processing</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Artificial Neural Networks</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Convolutional Neural Networks</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Document Object Model</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Application Programming Interfaces</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Internet Of Things</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Cloud Computing</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Computer Networks</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Data Science</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Machine Learning</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Deep Learning</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Web Development</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Code Review</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Leadership and Management</div>
+                    </div>
+                    <input type="radio" name="skills" id="b">
+                    <div id="tech-tool">
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Amazon Web Services</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">AWS Lambda</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">AWS Command Line Interface</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Tableau</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Power BI</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Bootstrap</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Flexbox</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">jQuery</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">MongoDB</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Node.js</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">React JS</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Express.js</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">PHP</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">PHP Frameworks</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">PHP Applications</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">MySQL</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">JavaScript</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Cascading Style Sheets</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">HTML</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">C#</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">SQL</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Adobe Photoshop</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Python</div>
+                        <div onclick="window.open('https:/\/www.google.com/search?q='+this.innerHTML)">Nmap</div>
+                    </div>
+                </div>
+            </div>
+            <div id="contact">
+                <div onclick="window.location = 'mailto:chinnikrishna854@gmail.com'" onmouseenter="this.children[0].src='img/email.gif'" onmouseleave="this.children[0].src='img/email.jpeg'">
+                    <img src="img/email.jpeg" width="50px">
+                    <div>Email</div>
+                </div>
+                <div onclick="window.location = 'https:/\/www.linkedin.com/in/chinni-krishna-139784248'" onmouseenter="this.children[0].src='img/linkedin.gif'" onmouseleave="this.children[0].src='img/linkedin.jpeg'">
+                    <img src="img/linkedin.jpeg" width="50px">
+                    <div>LinkedIn</div>
+                </div>
+                <div onclick="window.location = 'https:/\/www.instagram.com/_.chinni._.krishna'" onmouseenter="this.children[0].src='img/instagram.gif'" onmouseleave="this.children[0].src='img/instagram.jpeg'">
+                    <img src="img/instagram.jpeg" width="50px">
+                    <div>Instagram</div>
+                </div>
+            </div>
+        </div>
+        <div id="display">
+            <span style="display : inline-block; margin : 20px; padding : 20px; cursor : pointer;" onclick="this.parentElement.style.transform = 'translateX(100%)';">< Back</span>
+            <br><img src="" width="100%">
+        </div>
+        <script>
+            const items = document.querySelectorAll('#profile > div:last-of-type > div');
+            const containerWidth = items[0].parentElement.clientWidth;
+            const containerHeight = items[0].parentElement.clientHeight;
+
+            const colors = ['rgb(0,127,255)', 'rgb(0,191,127)', 'rgb(255,64,64)', 'black'];
+            const fontStyles = ['normal', 'italic'];
+            const fontWeights = ['normal', 'bold'];
+/*
+            const placedRects = [];
+
+            function isOverlapping(x, y, width, height) {
+                return placedRects.some(rect => {
+                return !(
+                    x + width < rect.x ||
+                    x > rect.x + rect.width ||
+                    y + height < rect.y ||
+                    y > rect.y + rect.height
+                );
+                });
+            }
+
+            items.forEach(item => {
+                // Random styles FIRST
+                item.style.color = colors[Math.floor(Math.random() * colors.length)];
+                item.style.fontStyle = fontStyles[Math.floor(Math.random() * fontStyles.length)];
+                item.style.fontWeight = fontWeights[Math.floor(Math.random() * fontWeights.length)];
+                item.style.fontSize = `${Math.floor(Math.random() * (13)) + 18}px`;
+
+                // Temporarily make visible so we can measure size
+                item.style.visibility = 'hidden';
+
+                const itemWidth = item.offsetWidth;
+                const itemHeight = item.offsetHeight;
+
+                let left, top, tries = 0;
+                const maxTries = 100;
+
+                do {
+                left = Math.floor(Math.random() * (containerWidth - itemWidth));
+                top = Math.floor(Math.random() * (containerHeight - itemHeight));
+                tries++;
+                } while (isOverlapping(left, top, itemWidth, itemHeight) && tries < maxTries);
+
+                // Apply final styles and track position
+                item.style.left = `${left}px`;
+                item.style.top = `${top}px`;
+                item.style.visibility = 'visible';
+
+                placedRects.push({ x: left, y: top, width: itemWidth, height: itemHeight });
+            });
+*/
+            const velocities = [];
+
+            items.forEach(item => {
+                // Random styles
+                item.style.color = colors[Math.floor(Math.random() * colors.length)];
+                item.style.fontStyle = fontStyles[Math.floor(Math.random() * fontStyles.length)];
+                item.style.fontWeight = fontWeights[Math.floor(Math.random() * fontWeights.length)];
+                item.style.fontSize = `${Math.floor(Math.random() * 13) + 18}px`;
+                item.style.visibility = 'hidden';
+
+                // Force rendering to measure size
+                const itemWidth = item.offsetWidth;
+                const itemHeight = item.offsetHeight;
+
+                // Random initial position
+                const left = Math.floor(Math.random() * (containerWidth - itemWidth));
+                const top = Math.floor(Math.random() * (containerHeight - itemHeight));
+
+                item.style.left = `${left}px`;
+                item.style.top = `${top}px`;
+                item.style.visibility = 'visible';
+
+                // Assign random velocity between -3 and 3
+                const vx = (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1);
+                const vy = (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1);
+                velocities.push({ vx, vy });
+            });
+
+            function animate() {
+                items.forEach((item, i) => {
+                const v = velocities[i];
+                const itemWidth = item.offsetWidth;
+                const itemHeight = item.offsetHeight;
+
+                let x = parseFloat(item.style.left);
+                let y = parseFloat(item.style.top);
+
+                // Bounce off walls
+                if (x <= 0 || x + itemWidth >= containerWidth) v.vx *= -1;
+                if (y <= 0 || y + itemHeight >= containerHeight) v.vy *= -1;
+
+                // Update position
+                x += v.vx;
+                y += v.vy;
+
+                item.style.left = `${x}px`;
+                item.style.top = `${y}px`;
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        </script>
+    </body>
+</html>
